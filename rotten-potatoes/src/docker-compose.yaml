@@ -1,0 +1,47 @@
+version: '3.8'
+volumes:
+  mongo_vol:
+  
+networks:
+  my_net:
+    driver: bridge
+
+services:
+  web:
+    image: evvolpe/rotten-potatoes:latest
+    build:
+      dockerfile: ./Dockerfile
+      context: .
+    ports:
+    - 5000:5000
+    networks:
+      - my_net
+    depends_on:
+      - mongo
+    environment:
+      MONGODB_DB: admin
+      MONGODB_HOST: mongo
+      MONGODB_PORT: 27017
+      MONGODB_USERNAME: mongouser
+      MONGODB_PASSWORD: mongopwd
+    
+  mongo:
+    image: mongo:4.4.3
+    ports:
+    - 27017:27017
+    networks:
+      - my_net
+    volumes:
+      - mongo_vol:/data/db  
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: mongouser
+      MONGO_INITDB_ROOT_PASSWORD: mongopwd 
+      
+    
+      
+     
+
+
+
+
+     

@@ -1,0 +1,9 @@
+terraform fmt
+terraform validate
+terraform plan -out plan1
+terraform apply plan1
+
+***Conectar o cluster
+gcloud container clusters get-credentials $(terraform output -raw kubernetes_cluster_name) --region $(terraform output -raw region)
+
+gcloud container clusters get-credentials my-gke-cluster --zone us-central1-a --project winterfoxit-333200

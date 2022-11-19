@@ -1,0 +1,18 @@
+gcloud config set compute/zone southamerica-east1-a
+gcloud services enable compute.googleapis.com
+gcloud services enable container.googleapis.com
+gcloud container clusters create meu-gcp-cluster --zone southamerica-east1-a --disk-type=pd-ssd --num-nodes=3 --machine-type=e2-medium
+
+gcloud container clusters create kubedev --zone southamerica-east1-a --disk-type=pd-ssd --num-nodes=5 --machine-type=e2-medium
+
+---
+
+gcloud container clusters list
+kubectl get nodes
+kubectl get pods
+kubectl apply -f deployment.yaml
+
+gcloud container clusters delete meu-gcp-cluster
+gcloud container clusters delete kubedev --zone southamerica-east1-a
+
+* Instalar Jenkins com helm

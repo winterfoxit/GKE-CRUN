@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web-app-python
+spec:
+  selector:
+    matchLabels:
+      app: web-app-python
+  template:
+    metadata:
+      labels:
+        app: web-app-python
+    spec:
+      containers:
+      - name: web-app-python
+        image: fabricioveronez/rotten-potatoes:latest
+        ports:
+        - containerPort: 5000
+        envFrom:
+          - configMapRef:
+              name: api-configmap
+        #Campo env vai chamar os valores do secret MongoDB
+        env:               
+          - name: Mongo_User
+            valueFrom:
+              secretKeyRef:
+                key: MONGO_INITDB_ROOT_USERNAME 
+                name: mongodb-secret
+          - name: Mongo_Pwd
+            valueFrom:
+              secretKeyRef:
+                key: MONGO_INITDB_ROOT_PASSWORD
+                name: mongodb-secret
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
