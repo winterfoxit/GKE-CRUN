@@ -1,12 +1,11 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: web-app-python-service
+  name: web
 spec:
   selector:
-    app: web-app-python
+    app: web
   ports:
-  - port: 82
+  - port: 80
     targetPort: 5000
-    nodePort: 30000
   type: LoadBalancer
